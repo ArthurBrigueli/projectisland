@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1402441859818156888}
   - component: {fileID: 8410061521296437277}
-  - component: {fileID: 4052697087810290146}
+  - component: {fileID: 8780776288900644022}
   m_Layer: 0
   m_Name: SpawnArvore
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 6756775234879875942}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.18709, y: -2.13539, z: 0}
+  m_LocalPosition: {x: -17.073961, y: -9.872379, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4052697087810290146
+--- !u!114 &8780776288900644022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -12,6 +12,11 @@ public class ThreeSelectSpawner : MonoBehaviour
     void Start()
     {
         ghostTree = Instantiate(treePrefab);
+
+        SpriteRenderer sr = ghostTree.GetComponent<SpriteRenderer>();
+        sr.sortingOrder = 5000;
+
+
         SpriteRenderer ghostSR = ghostTree.GetComponent<SpriteRenderer>();
         if (ghostSR != null)
             ghostSR.color = new Color(1, 1, 1, 0.5f);

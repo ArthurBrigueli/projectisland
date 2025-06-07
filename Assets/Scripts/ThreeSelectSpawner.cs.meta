@@ -1,2 +1,13 @@
 fileFormatVersion: 2
 guid: 24383350a55f2eb4bbd484a012d5984b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - groundTilemap: {instanceID: 0}
+  - treePrefab: {fileID: 8572611372069615892, guid: db2a19275094f1c4fbd6905859577d34, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -7,49 +7,50 @@ public class ThreeSelectSpawner : MonoBehaviour
     public GameObject treePrefab;
 
     private GameObject ghostTree;
-    private float minY, maxY;
+    public LayerMask wallLayer; // Layer da parede (Tilemap)
 
     void Start()
     {
         ghostTree = Instantiate(treePrefab);
-
-        SpriteRenderer sr = ghostTree.GetComponent<SpriteRenderer>();
-        sr.sortingOrder = 5000;
-
-
         SpriteRenderer ghostSR = ghostTree.GetComponent<SpriteRenderer>();
         if (ghostSR != null)
-            ghostSR.color = new Color(1, 1, 1, 0.5f);
-
-        BoundsInt bounds = groundTilemap.cellBounds;
-        minY = bounds.yMin;
-        maxY = bounds.yMax;
+            ghostSR.color = new Color(1f, 1f, 1f, 0.5f);
     }
 
     void Update()
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int cellPos = groundTilemap.WorldToCell(mouseWorldPos);
-
         Vector3 cellCenterPos = groundTilemap.GetCellCenterWorld(cellPos);
-        ghostTree.transform.position = new Vector3(cellCenterPos.x, cellCenterPos.y, 0);
 
         if (groundTilemap.HasTile(cellPos))
         {
+            ghostTree.transform.position = cellCenterPos;
             ghostTree.SetActive(true);
 
             if (Input.GetMouseButtonDown(0))
             {
-                GameObject tree = Instantiate(treePrefab, new Vector3(cellCenterPos.x, cellCenterPos.y, 0), Quaternion.identity);
-
-                SpriteRenderer sr = tree.GetComponent<SpriteRenderer>();
-                if (sr != null)
+                BoxCollider2D box = treePrefab.GetComponent<BoxCollider2D>();
+                if (box == null)
                 {
-                    // Quanto mais baixo o Y, maior o sortingOrder
-                    float yRange = maxY - minY;
-                    float yRelative = maxY - cellCenterPos.y; // Invertido!
-                    int sortingOrder = (int)((yRelative / yRange) * 1000) + 2; // Começa em 2
-                    sr.sortingOrder = sortingOrder;
+                    Debug.LogError("O prefab precisa de BoxCollider2D!");
+                    return;
+                }
+
+                Vector2 boxSize = box.size;
+                Vector2 boxOffset = box.offset;
+                Vector2 checkPos = (Vector2)cellCenterPos + boxOffset;
+
+                Collider2D hit = Physics2D.OverlapBox(checkPos, boxSize, 0f, wallLayer);
+
+                if (hit != null)
+                {
+                    Debug.Log("Tem parede no local! Não pode plantar.");
+                }
+                else
+                {
+                    Debug.Log("Local livre! Plantando árvore.");
+                    Instantiate(treePrefab, cellCenterPos, Quaternion.identity);
                 }
             }
         }
@@ -58,4 +59,5 @@ public class ThreeSelectSpawner : MonoBehaviour
             ghostTree.SetActive(false);
         }
     }
+
 }

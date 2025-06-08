@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -5,19 +6,45 @@ public class ThreeSelectSpawner : MonoBehaviour
 {
     public Tilemap groundTilemap;
     public GameObject treePrefab;
+    private bool IsTreeSelect = true;
+    public int countTreeSpawn;
+
+    public TextMeshProUGUI pointTreeText;
 
     private GameObject ghostTree;
+
     public LayerMask wallLayer; // Layer da parede (Tilemap)
+
+    public TreeManager treeManager;
 
     void Start()
     {
-        ghostTree = Instantiate(treePrefab);
-        SpriteRenderer ghostSR = ghostTree.GetComponent<SpriteRenderer>();
-        if (ghostSR != null)
-            ghostSR.color = new Color(1f, 1f, 1f, 0.5f);
+        countTreeSpawn = 10;
+
+        if (IsTreeSelect)
+        {
+            ghostTree = Instantiate(treePrefab);
+            SpriteRenderer ghostSR = ghostTree.GetComponent<SpriteRenderer>();
+            if (ghostSR != null)
+                ghostSR.color = new Color(1f, 1f, 1f, 0.5f);
+        }
     }
 
     void Update()
+    {
+        pointTreeText.text = countTreeSpawn.ToString();
+
+        if (countTreeSpawn > 0)
+        {
+            SpawnTree();
+        }
+        else if(ghostTree != null)
+        {
+            ghostTree.SetActive(false);
+        }
+    }
+
+    void SpawnTree()
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int cellPos = groundTilemap.WorldToCell(mouseWorldPos);
@@ -50,7 +77,12 @@ public class ThreeSelectSpawner : MonoBehaviour
                 else
                 {
                     Debug.Log("Local livre! Plantando árvore.");
-                    Instantiate(treePrefab, cellCenterPos, Quaternion.identity);
+                    // Instancia a árvore
+                    GameObject tree = Instantiate(treePrefab, cellCenterPos, Quaternion.identity);
+                    // Registra no TreeManager para começar a gerar moedas
+                    treeManager.RegisterTree(tree);
+
+                    countTreeSpawn--;
                 }
             }
         }
@@ -59,5 +91,4 @@ public class ThreeSelectSpawner : MonoBehaviour
             ghostTree.SetActive(false);
         }
     }
-
 }

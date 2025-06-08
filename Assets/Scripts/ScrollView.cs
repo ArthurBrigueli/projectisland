@@ -8,8 +8,8 @@ public class CameraZoom : MonoBehaviour
 
         if (scroll != 0.0f)
         {
-            Camera.main.orthographicSize -= scroll * 10f;
-            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 50f, 70f);
+            Camera.main.orthographicSize -= scroll * 20f;
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 60f, 100f);
         }
     }
 }

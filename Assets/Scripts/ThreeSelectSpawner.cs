@@ -22,7 +22,7 @@ public class ThreeSelectSpawner : MonoBehaviour
 
     void Start()
     {
-        countTreeSpawn = 1;
+        countTreeSpawn = 5;
 
         if (IsTreeSelect)
         {

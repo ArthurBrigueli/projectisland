@@ -11,7 +11,7 @@ public class GetPointsTree : MonoBehaviour
 
     public void AddPoint(int point)
     {
-        this.point += point;        
+        this.point += point;
     }
 
     public void RemovePoint(int point)
@@ -36,6 +36,7 @@ public class GetPointsTree : MonoBehaviour
             point += 1;
             yield return new WaitForSeconds(1);
             Money.text = point.ToString();
+
         }
     }
 }

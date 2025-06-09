@@ -44,5 +44,8 @@ TagManager:
   - name: arvore
     uniqueID: 3600026643
     locked: 0
+  - name: moeda
+    uniqueID: 120901577
+    locked: 0
   m_RenderingLayers:
   - Default

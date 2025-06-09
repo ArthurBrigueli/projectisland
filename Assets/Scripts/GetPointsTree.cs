@@ -9,6 +9,21 @@ public class GetPointsTree : MonoBehaviour
     private int point;
 
 
+    public void AddPoint(int point)
+    {
+        this.point += point;        
+    }
+
+    public void RemovePoint(int point)
+    {
+        this.point -= point;
+    }
+
+    public int GetPoint()
+    {
+        return point;
+    }
+
     void Start()
     {
         StartCoroutine(DropPoint());

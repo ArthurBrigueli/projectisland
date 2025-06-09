@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public class ThreeSelectSpawner : MonoBehaviour
@@ -17,13 +18,15 @@ public class ThreeSelectSpawner : MonoBehaviour
 
     public TreeManager treeManager;
 
+    public GameObject ghostTreePrefab;
+
     void Start()
     {
-        countTreeSpawn = 10;
+        countTreeSpawn = 1;
 
         if (IsTreeSelect)
         {
-            ghostTree = Instantiate(treePrefab);
+            ghostTree = Instantiate(ghostTreePrefab);
             SpriteRenderer ghostSR = ghostTree.GetComponent<SpriteRenderer>();
             if (ghostSR != null)
                 ghostSR.color = new Color(1f, 1f, 1f, 0.5f);
@@ -34,15 +37,24 @@ public class ThreeSelectSpawner : MonoBehaviour
     {
         pointTreeText.text = countTreeSpawn.ToString();
 
+        if (OpenShop.isShopOpen)
+        {
+            if (ghostTree != null)
+                ghostTree.SetActive(false);
+
+            return;
+        }
+
         if (countTreeSpawn > 0)
         {
             SpawnTree();
         }
-        else if(ghostTree != null)
+        else if (ghostTree != null)
         {
             ghostTree.SetActive(false);
         }
     }
+
 
     void SpawnTree()
     {
